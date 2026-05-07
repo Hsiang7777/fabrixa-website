@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FABRIXA | Atelier d’apprentissage pour adultes</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f2eb;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 8%;
+      background: rgba(246, 242, 235, 0.9);
+      border-bottom: 1px solid #ddd5c8;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 11px;
+      font-weight: normal;
+      letter-spacing: 3px;
+      color: #777;
+      margin-top: 2px;
+    }
+
+    nav a {
+      margin-left: 24px;
+      text-decoration: none;
+      color: #222;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      color: #6f5f45;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 56px;
+      padding: 100px 8% 80px;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 300px;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .tagline {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.08;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      color: #555;
+      max-width: 620px;
+      margin-bottom: 36px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 40px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    .btn-dark {
+      background: #20382d;
+      color: white;
+    }
+
+    .btn-dark:hover {
+      background: #14251e;
+      transform: translateY(-2px);
+    }
+
+    .btn-light {
+      background: white;
+      border: 1px solid #ccc;
+      color: #222;
+    }
+
+    .btn-light:hover {
+      transform: translateY(-2px);
+      border-color: #222;
+    }
+
+    .hero-images {
+      flex: 1;
+      min-width: 300px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 32px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+    }
+
+    .offset-down {
+      margin-top: 44px;
+    }
+
+    .offset-up {
+      margin-top: -44px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+      padding: 0 8% 70px;
+    }
+
+    .stat {
+      background: white;
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+
+    .stat strong {
+      font-size: 34px;
+      display: block;
+      color: #20382d;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: #666;
+      font-size: 15px;
+    }
+
+    .section {
+      padding: 92px 8%;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #8b7a5d;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.15;
+      font-weight: 400;
+      margin-bottom: 18px;
+    }
+
+    .section-subtitle {
+      color: #666;
+      max-width: 720px;
+      margin-bottom: 45px;
+      font-size: 18px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+      transition: 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: #666;
+    }
+
+    .course-image {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 24px;
+      margin-bottom: 22px;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+      color: #777;
+      font-size: 14px;
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+    }
+
+    .dark-section {
+      background: #20382d;
+      color: white;
+    }
+
+    .dark-section .section-subtitle,
+    .dark-section .section-kicker {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .activity {
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 30px;
+      border-radius: 28px;
+      font-size: 22px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .activity span {
+      display: block;
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 8px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .large-photo {
+      height: 520px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 36px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.08);
+    }
+
+    .teacher-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .teacher {
+      background: white;
+      border-radius: 26px;
+      padding: 22px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+
+    .teacher img {
+      width: 82px;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .teacher p {
+      color: #666;
+      font-size: 15px;
+    }
+
+    .agenda {
+      display: grid;
+      gap: 16px;
+    }
+
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 150px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+
+    .agenda-date {
+      color: #20382d;
+      font-weight: bold;
+    }
+
+    .agenda-item p {
+      color: #666;
+    }
+
+    .testimonial {
+      font-size: 28px;
+      line-height: 1.45;
+      max-width: 900px;
+      color: white;
+    }
+
+    .testimonial-author {
+      margin-top: 28px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .map-box {
+      background: white;
+      border-radius: 36px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+
+    .fake-map {
+      min-height: 300px;
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(32,56,45,0.18), rgba(201,185,159,0.4)),
+        url("https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1200&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .contact-info h3 {
+      font-size: 30px;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .contact-info p {
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 90px 8%;
+      background: #efe8dc;
+    }
+
+    footer h2 {
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.15;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    footer p {
+      color: #666;
+      margin-bottom: 32px;
+      font-size: 18px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 860px) {
+      nav {
+        display: none;
+      }
+
+      .offset-down,
+      .offset-up {
+        margin-top: 0;
+      }
+
+      .split,
+      .map-box {
+        grid-template-columns: 1fr;
+      }
+
+      .large-photo {
+        height: 360px;
+      }
+
+      .agenda-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      FABRIXA
+      <span>Adult Learning Studio</span>
+    </div>
+
+    <nav>
+      <a href="#accueil">Accueil</a>
+      <a href="#mission">Mission</a>
+      <a href="#cours">Cours</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="accueil">
+    <div class="hero-text">
+      <div class="tagline">Atelier d’apprentissage pour adultes</div>
+
+      <h1>
+        Un espace pour apprendre,<br>
+        créer et rencontrer.
+      </h1>
+
+      <p>
+        FABRIXA propose des cours, des ateliers et des rencontres pour adultes,
+        dans une atmosphère chaleureuse, simple et inspirante.
+      </p>
+
+      <div class="buttons">
+        <a class="btn btn-dark" href="#cours">Découvrir les cours</a>
+        <a class="btn btn-light" href="#agenda">Voir l’agenda</a>
+      </div>
+    </div>
+
+    <div class="hero-images">
+      <img class="hero-photo" src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1200&auto=format&fit=crop" alt="Adultes en atelier" />
+      <img class="hero-photo offset-down" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="Cours en groupe" />
+      <img class="hero-photo offset-up" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Apprentissage numérique" />
+      <img class="hero-photo" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" alt="Travail collaboratif" />
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <strong>12+</strong>
+      <span>Cours & ateliers</span>
+    </div>
+    <div class="stat">
+      <strong>8</strong>
+      <span>Participants par groupe</span>
+    </div>
+    <div class="stat">
+      <strong>3</strong>
+      <span>Soirées par semaine</span>
+    </div>
+    <div class="stat">
+      <strong>100%</strong>
+      <span>Adapté aux adultes</span>
+    </div>
+  </section>
+
+  <section class="section" id="mission">
+    <div class="split">
+      <div>
+        <div class="section-kicker">Notre mission</div>
+        <h2 class="section-title">L’apprentissage ne s’arrête pas à l’école.</h2>
+        <p class="section-subtitle">
+          Chaque adulte mérite un lieu pour explorer, progresser et se reconnecter à sa curiosité.
+          FABRIXA crée un cadre calme, humain et stimulant pour apprendre sans pression.
+        </p>
+
+        <div class="cards">
+          <div class="card">
+            <h3>Quoi</h3>
+            <p>Cours pour adultes, ateliers pratiques et activités collectives.</p>
+          </div>
+
+          <div class="card">
+            <h3>Pour qui</h3>
+            <p>Pour les adultes qui souhaitent apprendre, créer ou développer une nouvelle compétence.</p>
+          </div>
+        </div>
+      </div>
+
+      <img class="large-photo" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop" alt="Groupe d’adultes en discussion" />
+    </div>
+  </section>
+
+  <section class="section" id="cours">
+    <div class="section-kicker">Cours</div>
+    <h2 class="section-title">Cours populaires</h2>
+
+    <p class="section-subtitle">
+      Des cours accessibles, en petit groupe, pensés pour le rythme de la vie adulte.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <img class="course-image" src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop" alt="Écriture créative" />
+        <h3>Écriture créative</h3>
+        <p>Exprimer ses idées, raconter des histoires et développer son style personnel.</p>
+        <div class="course-meta">
+          <span>Débutant</span>
+          <span>2h / semaine</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="course-image" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1200&auto=format&fit=crop" alt="Langue et culture" />
+        <h3>Langue & culture</h3>
+        <p>Apprendre une langue à travers la conversation, la culture et la pratique.</p>
+        <div class="course-meta">
+          <span>Tous niveaux</span>
+          <span>Soirée</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="course-image" src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop" alt="Ateliers créatifs" />
+        <h3>Ateliers créatifs</h3>
+        <p>Des sessions courtes pour découvrir, expérimenter et créer ensemble.</p>
+        <div class="course-meta">
+          <span>Workshop</span>
+          <span>Week-end</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark-section" id="activites">
+    <div class="section-kicker">Activités</div>
+    <h2 class="section-title">Au-delà des cours.</h2>
+
+    <p class="section-subtitle">
+      Nous organisons des moments de rencontre pour apprendre autrement et créer des liens.
+    </p>
+
+    <div class="cards">
+      <div class="activity">Rencontre communautaire<span>Discussion, café et échanges</span></div>
+      <div class="activity">Atelier du week-end<span>Une activité courte et pratique</span></div>
+      <div class="activity">Soirée lecture<span>Lire, partager, découvrir</span></div>
+      <div class="activity">Session créative<span>Créer ensemble dans un cadre calme</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="enseignants">
+    <div class="split">
+      <div>
+        <div class="section-kicker">Équipe</div>
+        <h2 class="section-title">Des intervenants attentifs et expérimentés.</h2>
+        <p class="section-subtitle">
+          Nos cours sont animés par des personnes passionnées, avec une approche claire,
+          progressive et adaptée aux adultes.
+        </p>
+      </div>
+
+      <div class="teacher-list">
+        <div class="teacher">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop" alt="Enseignante" />
+          <div>
+            <h3>Claire Martin</h3>
+            <p>Écriture, narration et expression personnelle</p>
+          </div>
+        </div>
+
+        <div class="teacher">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Enseignant" />
+          <div>
+            <h3>Julien Moreau</h3>
+            <p>Langue, culture et conversation</p>
+          </div>
+        </div>
+
+        <div class="teacher">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=800&auto=format&fit=crop" alt="Animatrice" />
+          <div>
+            <h3>Emma Laurent</h3>
+            <p>Ateliers créatifs et dynamique de groupe</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="agenda">
+    <div class="section-kicker">Agenda</div>
+    <h2 class="section-title">Prochains rendez-vous</h2>
+    <p class="section-subtitle">
+      Une première sélection de cours et d’ateliers. Les horaires peuvent être adaptés selon la demande.
+    </p>
+
+    <div class="agenda">
+      <div class="agenda-item">
+        <div class="agenda-date">Mardi 19:00</div>
+        <div>
+          <h3>Langue & conversation</h3>
+          <p>Petit groupe, pratique orale et thèmes culturels.</p>
+        </div>
+        <a class="btn btn-light" href="#contact">Réserver</a>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-date">Jeudi 18:30</div>
+        <div>
+          <h3>Écriture créative</h3>
+          <p>Exercices guidés, partage et progression personnelle.</p>
+        </div>
+        <a class="btn btn-light" href="#contact">Réserver</a>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-date">Samedi 10:00</div>
+        <div>
+          <h3>Atelier du week-end</h3>
+          <p>Un format court pour découvrir une pratique.</p>
+        </div>
+        <a class="btn btn-light" href="#contact">Réserver</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark-section">
+    <p class="testimonial">
+      “Un lieu simple, beau et accueillant. On apprend sans pression,
+      et on repart avec l’envie de continuer.”
+    </p>
+    <div class="testimonial-author">— Une participante FABRIXA</div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="section-kicker">Contact</div>
+    <h2 class="section-title">Venez nous rencontrer.</h2>
+
+    <div class="map-box">
+      <div class="fake-map"></div>
+
+      <div class="contact-info">
+        <h3>FABRIXA Studio</h3>
+        <p><strong>Adresse</strong><br>Rue de l’Atelier 12, Bruxelles</p>
+        <p><strong>Email</strong><br>bonjour@fabrixa.studio</p>
+        <p><strong>Instagram</strong><br>@fabrixa.studio</p>
+        <p><strong>Horaires</strong><br>Mardi – Samedi, 10:00 – 20:00</p>
+
+        <div class="buttons" style="margin-top: 26px;">
+          <a class="btn btn-dark" href="mailto:bonjour@fabrixa.studio">Nous contacter</a>
+          <a class="btn btn-light" href="#agenda">Voir l’agenda</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <h2>Commencez votre nouveau parcours.</h2>
+
+    <p>
+      Contactez-nous pour découvrir les prochains cours et ateliers.
+    </p>
+
+    <div class="buttons" style="justify-content: center;">
+      <a class="btn btn-dark" href="mailto:bonjour@fabrixa.studio">Nous contacter</a>
+      <a class="btn btn-light" href="#accueil">Retour en haut</a>
+    </div>
+  </footer>
+
+</body>
+</html>
