@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FABRIXA | Atelier d’apprentissage pour adultes</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f7f2ea;
+      color: #181818;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      padding: 28px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(247, 242, 234, 0.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    nav {
+      display: flex;
+      gap: 42px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    nav a {
+      position: relative;
+      padding-bottom: 8px;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: #181818;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 130px 7% 70px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(247,242,234,0.52), rgba(247,242,234,0.96)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1800&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .ripple {
+      position: absolute;
+      left: 50%;
+      bottom: 60px;
+      width: 980px;
+      height: 380px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(255,255,255,0.95) 0%,
+          rgba(120,120,120,0.34) 5%,
+          rgba(255,255,255,0.75) 8%,
+          rgba(120,120,120,0.18) 12%,
+          rgba(255,255,255,0.48) 18%,
+          rgba(90,90,90,0.14) 25%,
+          rgba(255,255,255,0.25) 36%,
+          transparent 65%);
+      filter: blur(0.4px);
+      opacity: 0.8;
+      animation: ripplePulse 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .water-drop-top {
+      position: absolute;
+      top: 120px;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      transform: translateX(-50%);
+      border-radius: 50% 50% 55% 55%;
+      background: radial-gradient(circle at 35% 25%, #fff, #bfc0bd 45%, #343434 100%);
+      box-shadow: inset -6px -8px 18px rgba(0,0,0,0.35), 0 16px 35px rgba(0,0,0,0.18);
+      animation: floatingDrop 3s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .water-drop-main {
+      position: absolute;
+      left: 50%;
+      bottom: 150px;
+      width: 34px;
+      height: 90px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(40,40,40,0.52));
+      border-radius: 50% 50% 48% 48%;
+      filter: blur(0.3px);
+      opacity: 0.8;
+      animation: mainDrop 3.8s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 1050px;
+      margin-top: 20px;
+    }
+
+    .kicker {
+      text-transform: uppercase;
+      letter-spacing: 9px;
+      font-size: 14px;
+      margin-bottom: 34px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.15s;
+    }
+
+    .brand-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(82px, 14vw, 190px);
+      font-weight: 400;
+      line-height: 0.8;
+      letter-spacing: 18px;
+      margin-bottom: 34px;
+      text-transform: uppercase;
+    }
+
+    .brand-title span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(-80px) scaleY(1.25);
+      filter: blur(12px);
+      animation: letterDrop 1.15s cubic-bezier(.16,.9,.24,1) forwards;
+    }
+
+    .brand-title span:nth-child(1) { animation-delay: 0.22s; }
+    .brand-title span:nth-child(2) { animation-delay: 0.32s; }
+    .brand-title span:nth-child(3) { animation-delay: 0.42s; }
+    .brand-title span:nth-child(4) { animation-delay: 0.52s; }
+    .brand-title span:nth-child(5) { animation-delay: 0.62s; }
+    .brand-title span:nth-child(6) { animation-delay: 0.72s; }
+    .brand-title span:nth-child(7) { animation-delay: 0.82s; }
+
+    .brand-title span::after {
+      content: "";
+      display: block;
+      width: 2px;
+      height: 34px;
+      margin: -5px auto 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.45), transparent);
+      border-radius: 999px;
+      transform: scaleY(0);
+      transform-origin: top;
+      animation: drip 1.6s ease forwards;
+      animation-delay: 1.15s;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(30px, 4vw, 46px);
+      color: #555;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .hero-description {
+      max-width: 590px;
+      margin: 0 auto 52px;
+      color: #666;
+      font-size: 15px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 1.35s;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 220px;
+      padding: 17px 32px;
+      border-radius: 999px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: 0.3s ease;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 1.5s;
+    }
+
+    .btn-dark {
+      background: #111;
+      color: white;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.16);
+    }
+
+    .btn-dark:hover {
+      transform: translateY(-4px);
+      background: #20382d;
+    }
+
+    .scroll-arrow {
+      position: absolute;
+      left: 50%;
+      bottom: 32px;
+      transform: translateX(-50%);
+      font-size: 42px;
+      font-family: 'Cormorant Garamond', serif;
+      animation: arrowMove 1.8s ease-in-out infinite;
+      z-index: 4;
+      color: #111;
+    }
+
+    .section {
+      padding: 95px 9%;
+    }
+
+    .section-center {
+      text-align: center;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      letter-spacing: 7px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 400;
+      line-height: 1.08;
+      margin-bottom: 18px;
+    }
+
+    .section-text {
+      max-width: 620px;
+      margin: 0 auto 54px;
+      color: #666;
+      font-size: 16px;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .course-card {
+      background: rgba(255,255,255,0.72);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 22px 55px rgba(0,0,0,0.07);
+      transition: 0.35s ease;
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.1);
+    }
+
+    .course-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      filter: saturate(0.82);
+    }
+
+    .course-content {
+      padding: 34px;
+      text-align: left;
+    }
+
+    .course-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 400;
+      margin-bottom: 14px;
+    }
+
+    .course-content p {
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 30px;
+    }
+
+    .link-arrow {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .link-arrow span {
+      margin-left: 12px;
+      transition: 0.25s ease;
+    }
+
+    .link-arrow:hover span {
+      margin-left: 20px;
+    }
+
+    .agenda-section {
+      background: #e9dfd0;
+      display: grid;
+      grid-template-columns: 1.1fr 2fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .agenda-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-left: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .agenda-item {
+      padding: 10px 34px 20px;
+      border-right: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .agenda-day {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 54px;
+      line-height: 1;
+    }
+
+    .agenda-month {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 26px;
+    }
+
+    .agenda-item h3 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .agenda-item p {
+      color: #555;
+      font-size: 14px;
+    }
+
+    .contact-section {
+      position: relative;
+      padding: 90px 9%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(247,242,234,1) 0%, rgba(247,242,234,0.85) 62%, rgba(247,242,234,0.45) 100%),
+        url("https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=1600&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center right;
+    }
+
+    .contact-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 5vw, 64px);
+      font-weight: 400;
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+
+    .contact-section p {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 34px 9%;
+      font-size: 14px;
+      color: #555;
+      background: #f7f2ea;
+    }
+
+    footer .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      color: #111;
+    }
+
+    @keyframes letterDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-80px) scaleY(1.25);
+        filter: blur(12px);
+      }
+      62% {
+        opacity: 1;
+        transform: translateY(9px) scaleY(0.9);
+        filter: blur(1px);
+      }
+      80% {
+        transform: translateY(-3px) scaleY(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes drip {
+      0% {
+        opacity: 0;
+        transform: scaleY(0);
+      }
+      45% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+      100% {
+        opacity: 0.7;
+        transform: scaleY(0.55);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes ripplePulse {
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 0.78;
+      }
+      50% {
+        transform: translateX(-50%) scale(1.08);
+        opacity: 0.95;
+      }
+    }
+
+    @keyframes floatingDrop {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(18px);
+      }
+    }
+
+    @keyframes mainDrop {
+      0%, 100% {
+        transform: translateX(-50%) scaleY(0.75);
+        opacity: 0.45;
+      }
+      50% {
+        transform: translateX(-50%) scaleY(1.15);
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes arrowMove {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(8px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      header {
+        position: absolute;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .brand-title {
+        letter-spacing: 8px;
+      }
+
+      .course-grid,
+      .agenda-section,
+      .contact-section {
+        grid-template-columns: 1fr;
+      }
+
+      .agenda-list {
+        grid-template-columns: 1fr;
+        border-left: none;
+      }
+
+      .agenda-item {
+        border-right: none;
+        border-top: 1px solid rgba(0,0,0,0.12);
+        padding: 28px 0;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 18px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .brand-title {
+        font-size: 64px;
+        letter-spacing: 5px;
+      }
+
+      .kicker {
+        letter-spacing: 5px;
+      }
+
+      .hero-subtitle {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a class="logo" href="index.html">FABRIXA</a>
+
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="courses.html">Cours</a>
+      <a href="#agenda">Agenda</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="water-drop-top"></div>
+    <div class="water-drop-main"></div>
+    <div class="ripple"></div>
+
+    <div class="hero-content">
+      <div class="kicker">Bienvenue chez</div>
+
+      <h1 class="brand-title" aria-label="FABRIXA">
+        <span>F</span><span>A</span><span>B</span><span>R</span><span>I</span><span>X</span><span>A</span>
+      </h1>
+
+      <div class="hero-subtitle">Apprendre. Créer. Partager.</div>
+
+      <p class="hero-description">
+        Des cours pour adultes dans une atmosphère chaleureuse et inspirante.
+        Un lieu pour découvrir, pratiquer et rencontrer.
+      </p>
+
+      <a class="btn btn-dark" href="courses.html">Découvrir les cours</a>
+    </div>
+
+    <a class="scroll-arrow" href="#cours">↓</a>
+  </section>
+
+  <section class="section section-center" id="cours">
+    <div class="section-kicker">Nos cours</div>
+    <h2 class="section-title">Explorer votre créativité</h2>
+    <p class="section-text">
+      Des cours pensés pour les adultes, accessibles à tous les niveaux.
+    </p>
+
+    <div class="course-grid">
+      <div class="course-card">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop" alt="Écriture créative">
+        <div class="course-content">
+          <h3>Écriture créative</h3>
+          <p>Développer son imagination, raconter des histoires et retrouver le plaisir d’écrire.</p>
+          <a class="link-arrow" href="courses.html">En savoir plus <span>→</span></a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1200&auto=format&fit=crop" alt="Langue et culture">
+        <div class="course-content">
+          <h3>Langue & Culture</h3>
+          <p>Conversation, culture et pratique dans une ambiance détendue et conviviale.</p>
+          <a class="link-arrow" href="courses.html">En savoir plus <span>→</span></a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1200&auto=format&fit=crop" alt="Ateliers créatifs">
+        <div class="course-content">
+          <h3>Ateliers créatifs</h3>
+          <p>Découvrir, expérimenter et créer ensemble pendant le week-end.</p>
+          <a class="link-arrow" href="courses.html">En savoir plus <span>→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section agenda-section" id="agenda">
+    <div>
+      <div class="section-kicker">Agenda</div>
+      <h2 class="section-title">Prochains rendez-vous</h2>
+      <a class="link-arrow" href="courses.html">Voir l’agenda complet <span>→</span></a>
+    </div>
+
+    <div class="agenda-list">
+      <div class="agenda-item">
+        <div class="agenda-day">17</div>
+        <div class="agenda-month">Mai</div>
+        <h3>Atelier écriture</h3>
+        <p>Samedi 10:00 – 13:00<br>Places limitées</p>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-day">24</div>
+        <div class="agenda-month">Mai</div>
+        <h3>Conversation FR / NL</h3>
+        <p>Samedi 18:00 – 20:00<br>Tous niveaux</p>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-day">31</div>
+        <div class="agenda-month">Mai</div>
+        <h3>Atelier créatif</h3>
+        <p>Samedi 10:00 – 16:00<br>Matériel inclus</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div>
+      <h2>Une question ?<br>Nous sommes là.</h2>
+    </div>
+
+    <div>
+      <p>Écrivez-nous ou passez nous voir. Nous vous répondrons avec plaisir.</p>
+      <a class="btn btn-dark" href="contact.html">Nous contacter</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">FABRIXA</div>
+    <div>© 2026 FABRIXA — Tous droits réservés.</div>
+    <div>frank.tierens@gmail.com</div>
+  </footer>
+
+</body>
+</html>

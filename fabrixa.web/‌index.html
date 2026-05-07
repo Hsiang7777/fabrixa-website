@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FABRIXA | Atelier d’apprentissage pour adultes</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f2eb;
+      color: #1f1f1f;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 8%;
+      background: rgba(246, 242, 235, 0.78);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 11px;
+      font-weight: normal;
+      letter-spacing: 3px;
+      color: #777;
+      margin-top: 2px;
+    }
+
+    nav a {
+      margin-left: 24px;
+      text-decoration: none;
+      color: #222;
+      font-size: 15px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 120px 8% 80px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(246,242,235,0.55), rgba(246,242,235,0.96)),
+        url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .water-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.55;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.95), transparent 22%),
+        radial-gradient(circle at 80% 30%, rgba(211,226,219,0.9), transparent 24%),
+        radial-gradient(circle at 45% 80%, rgba(190,208,198,0.65), transparent 26%);
+      filter: blur(8px);
+      animation: waterMove 9s ease-in-out infinite alternate;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 980px;
+    }
+
+    .tagline {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 13px;
+      color: #5d6e63;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .water-title {
+      font-size: clamp(52px, 8vw, 104px);
+      line-height: 1.02;
+      font-weight: 400;
+      letter-spacing: -3px;
+      margin-bottom: 32px;
+    }
+
+    .water-title span {
+      display: block;
+      opacity: 0;
+      transform: translateY(-90px) scaleY(1.35);
+      filter: blur(14px);
+      animation: waterDrop 1.15s cubic-bezier(.16, .9, .24, 1) forwards;
+    }
+
+    .water-title span:nth-child(1) { animation-delay: 0.15s; }
+    .water-title span:nth-child(2) { animation-delay: 0.42s; }
+    .water-title span:nth-child(3) { animation-delay: 0.69s; }
+
+    .hero p {
+      max-width: 650px;
+      font-size: 19px;
+      color: #444;
+      margin-bottom: 38px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards;
+      animation-delay: 1.25s;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards;
+      animation-delay: 1.45s;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: 0.25s ease;
+    }
+
+    .btn-dark {
+      background: #20382d;
+      color: white;
+    }
+
+    .btn-light {
+      background: rgba(255,255,255,0.8);
+      color: #20382d;
+      border: 1px solid rgba(32,56,45,0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .drop-line {
+      position: absolute;
+      right: 8%;
+      bottom: 70px;
+      width: 1px;
+      height: 180px;
+      background: linear-gradient(transparent, rgba(32,56,45,0.55), transparent);
+      overflow: hidden;
+    }
+
+    .drop-line::after {
+      content: "";
+      position: absolute;
+      top: -30px;
+      left: -4px;
+      width: 9px;
+      height: 9px;
+      background: #20382d;
+      border-radius: 50%;
+      animation: droplet 2.6s ease-in-out infinite;
+    }
+
+    .section {
+      padding: 100px 8%;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #7d6f55;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 22px;
+    }
+
+    .section-subtitle {
+      max-width: 720px;
+      color: #666;
+      font-size: 18px;
+      margin-bottom: 48px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 34px;
+      padding: 30px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.06);
+      transition: 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 26px;
+      margin-bottom: 24px;
+    }
+
+    .card h3 {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #666;
+    }
+
+    .dark-section {
+      background: #20382d;
+      color: white;
+    }
+
+    .dark-section .section-kicker,
+    .dark-section .section-subtitle {
+      color: rgba(255,255,255,0.72);
+    }
+
+    .agenda-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .agenda-item {
+      background: white;
+      border-radius: 28px;
+      padding: 26px;
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      gap: 24px;
+      align-items: center;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.05);
+    }
+
+    .agenda-date {
+      color: #20382d;
+      font-weight: bold;
+    }
+
+    .contact-box {
+      background: #efe8dc;
+      border-radius: 40px;
+      padding: 60px;
+      text-align: center;
+    }
+
+    .contact-box h2 {
+      font-size: clamp(38px, 5vw, 64px);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .contact-box p {
+      color: #666;
+      font-size: 18px;
+      margin-bottom: 32px;
+    }
+
+    footer {
+      padding: 38px 8%;
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+    }
+
+    @keyframes waterDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-90px) scaleY(1.35);
+        filter: blur(14px);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(10px) scaleY(0.92);
+        filter: blur(2px);
+      }
+      78% {
+        transform: translateY(-4px) scaleY(1.04);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes waterMove {
+      from { transform: translate(-20px, -10px) scale(1); }
+      to { transform: translate(20px, 14px) scale(1.05); }
+    }
+
+    @keyframes droplet {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translateY(220px); opacity: 0; }
+    }
+
+    @media (max-width: 860px) {
+      header {
+        position: absolute;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 130px;
+      }
+
+      .water-title {
+        letter-spacing: -1px;
+      }
+
+      .agenda-item {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-box {
+        padding: 42px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      FABRIXA
+      <span>Adult Learning Studio</span>
+    </div>
+
+    <nav>
+      <a href="#mission">Mission</a>
+      <a href="courses.html">Cours</a>
+      <a href="#agenda">Agenda</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="water-bg"></div>
+
+    <div class="hero-content">
+      <div class="tagline">Atelier d’apprentissage pour adultes</div>
+
+      <h1 class="water-title">
+        <span>Apprendre.</span>
+        <span>Créer.</span>
+        <span>Rencontrer.</span>
+      </h1>
+
+      <p>
+        FABRIXA est un espace chaleureux pour adultes : cours, ateliers,
+        conversations et moments de rencontre dans un cadre calme et inspirant.
+      </p>
+
+      <div class="buttons">
+        <a class="btn btn-dark" href="courses.html">Découvrir les cours</a>
+        <a class="btn btn-light" href="contact.html">Nous contacter</a>
+      </div>
+    </div>
+
+    <div class="drop-line"></div>
+  </section>
+
+  <section class="section" id="mission">
+    <div class="section-kicker">Notre mission</div>
+    <h2 class="section-title">L’apprentissage ne s’arrête pas à l’école.</h2>
+    <p class="section-subtitle">
+      Nous créons un lieu simple, humain et élégant pour aider les adultes à apprendre,
+      pratiquer et se reconnecter à leur curiosité.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Quoi</h3>
+        <p>Cours pour adultes, ateliers pratiques et activités collectives.</p>
+      </div>
+
+      <div class="card">
+        <h3>Pour qui</h3>
+        <p>Pour celles et ceux qui veulent apprendre, créer ou développer une nouvelle compétence.</p>
+      </div>
+
+      <div class="card">
+        <h3>Pourquoi</h3>
+        <p>Parce que les adultes ont besoin d’un espace calme, flexible et stimulant.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cours">
+    <div class="section-kicker">Cours populaires</div>
+    <h2 class="section-title">Des cours pensés pour le rythme adulte.</h2>
+    <p class="section-subtitle">
+      Petits groupes, ambiance détendue et progression claire.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop" alt="Écriture créative">
+        <h3>Écriture créative</h3>
+        <p>Exprimer ses idées, raconter des histoires et développer son style personnel.</p>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1200&auto=format&fit=crop" alt="Langue et culture">
+        <h3>Langue & culture</h3>
+        <p>Apprendre une langue à travers la conversation, la culture et la pratique.</p>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop" alt="Ateliers créatifs">
+        <h3>Ateliers créatifs</h3>
+        <p>Des sessions courtes pour découvrir, expérimenter et créer ensemble.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark-section" id="agenda">
+    <div class="section-kicker">Agenda</div>
+    <h2 class="section-title">Prochains rendez-vous</h2>
+    <p class="section-subtitle">
+      Une sélection de cours et d’ateliers pour commencer facilement.
+    </p>
+
+    <div class="agenda-list">
+      <div class="agenda-item">
+        <div class="agenda-date">Mardi 19:00</div>
+        <div>
+          <h3>Langue & conversation</h3>
+          <p>Petit groupe, pratique orale et thèmes culturels.</p>
+        </div>
+        <a class="btn btn-light" href="contact.html">Réserver</a>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-date">Jeudi 18:30</div>
+        <div>
+          <h3>Écriture créative</h3>
+          <p>Exercices guidés, partage et progression personnelle.</p>
+        </div>
+        <a class="btn btn-light" href="contact.html">Réserver</a>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-date">Samedi 10:00</div>
+        <div>
+          <h3>Atelier du week-end</h3>
+          <p>Un format court pour découvrir une pratique.</p>
+        </div>
+        <a class="btn btn-light" href="contact.html">Réserver</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="contact-box">
+      <h2>Commencez votre nouveau parcours.</h2>
+      <p>Contactez-nous pour découvrir les prochains cours et ateliers.</p>
+      <div class="buttons" style="justify-content: center;">
+        <a class="btn btn-dark" href="contact.html">Nous contacter</a>
+        <a class="btn btn-light" href="mailto:frank.tierens@gmail.com">frank.tierens@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 FABRIXA — Atelier d’apprentissage pour adultes
+  </footer>
+
+</body>
+</html>
